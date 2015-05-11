@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Survey Form</title>
+    <link rel='stylesheet' href='/style.css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var socket = io.connect();
+            $('form').submit(function(){
+                socket.emit('new_form', {name: name, location: location, language: language, comment: comment})
+            });
+        });
+    </script>
 </head>
 <body>
     <div>
         <form action="/result" method="post">
-            Your Name: <input type="text" name="name">
+            Your Name: <input type="text" name="name"><br>
             Dojo Location: <select name="location">
                                 <option value="Mountain View">Mountain View</option>
                                 <option value="San Jose">San Jose</option>
                                 <option value="Los Angeles">Los Angeles</option>
-                           </select>
+                           </select><br>
             Favorite Language: <select name="location">
                                     <option value="Javascript">Javascript</option>
                                     <option value="Ruby">Ruby</option>
                                     <option value="PHP">PHP</option>
-                               </select>
+                               </select><br>
+            Comment (optional):<br>
+            <textarea name="comment"></textarea>
+            <input type="submit" value="Submit">
         </form>
     </div>
 </body>
